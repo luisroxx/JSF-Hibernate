@@ -24,8 +24,9 @@ public class FiltroSessao implements Filter {
 
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpSession session = ((HttpServletRequest) req).getSession(false);
+                Object admin = (session != null) ? session.getAttribute("idUsuarioLogado") : null;
 
-		if (session.getAttribute("idUsuarioLogado") != null) {
+		if (admin!=null && session.getAttribute("idUsuarioLogado") != null) {
 			chain.doFilter(request, res);
 		} else {
 			HttpServletResponse response = (HttpServletResponse) res;
@@ -39,5 +40,4 @@ public class FiltroSessao implements Filter {
 	@Override
 	public void init(FilterConfig arg0) throws ServletException {
 	}
-
 }

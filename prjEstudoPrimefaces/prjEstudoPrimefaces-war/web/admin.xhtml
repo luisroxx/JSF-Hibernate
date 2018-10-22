@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:body>
+        <div class="container">
+
+            <div class="starter-template">
+                <h1>Plugin Manager</h1>
+
+                <h:dataTable value="#{pluginBean.pm.listPlugins()}" var="plugin"
+                             styleClass="table table-striped">
+
+                    <h:column>
+                        <!-- column header -->
+                        <f:facet name="header">Plugin Nome</f:facet>
+                        <!-- row record -->
+                        #{plugin.nome}
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Plugin Path</f:facet>
+                            #{plugin.path}
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Enabled</f:facet>
+                            #{plugin.enable}
+                    </h:column>
+
+                    
+                <h:column>
+                    <f:facet name="header">Operations</f:facet>
+                    <h:form>
+                        <h:commandLink rendered="#{pluginBean.isActive(plugin)}"
+                                       action="#{pluginBean.disable(plugin)}">Disable
+                        </h:commandLink>&nbsp;&nbsp;
+                        <h:commandLink rendered="#{!pluginBean.isActive(plugin)}"
+                                       action="#{pluginBean.enable(plugin)}">Enable
+                        </h:commandLink>&nbsp;&nbsp;
+                        <h:commandLink id="uninstall" action="#{pluginBean.uninstall(plugin)}">Desinstalar
+                        </h:commandLink>&nbsp;&nbsp;
+                    </h:form>
+                </h:column>
+                  
+                </h:dataTable>
+                <h:form enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="pluginInputFile">File input</label>
+                        <p:fileUpload value="#{pluginBean.uploadedFile}" mode="simple" />
+                        <h:commandButton value="Install" action="#{pluginBean.install()}"
+                                         styleClass="btn btn-primary" />
+                        <h:messages />
+                    </div>
+                </h:form>
+                <br/>
+            </div>
+        </div>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet"
+              href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+
+        <!-- Optional theme -->
+        <link rel="stylesheet"
+              href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" />
+
+        <script
+        src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script
+        src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+    </h:body>
+
+</ui:composition>
